@@ -2,6 +2,7 @@
 import time
 import argparse
 import datetime
+import sched
 
 
 def format_time(secs: int) -> str:
@@ -49,23 +50,24 @@ def get_seconds_from_mixed_format(mixed: str) -> int:
     return seconds
 
 
+def write_to_file(line: str, filepath: str, verbose: bool):
+    with open(filepath, mode="w") as fp:
+        fp.write(line)
+    if verbose:
+        print(line)
+
+
 def count_me_down(
     seconds: int, prefix: str, ending: str, step: int, filepath: str, verbose: bool
 ):
+    for moment in range(0, seconds + step, step):
+        if seconds < moment:
+            break
+        line = f"{prefix} {format_time(seconds-moment)}"
+        s.enter(moment, 1, write_to_file, argument=(line, filepath, verbose))
 
-    while seconds:
-        line = f"{prefix} {format_time(seconds)}"
-        with open(filepath, mode="w") as fp:
-            fp.write(line)
-        if verbose:
-            print(line)
-        seconds = seconds - step
-        time.sleep(step)
-
-    with open(filepath, mode="w") as fp:
-        fp.write(ending)
-    if verbose:
-        print(ending)
+    s.run()
+    write_to_file(ending, filepath, verbose)
 
 
 if __name__ == "__main__":
@@ -121,6 +123,7 @@ if __name__ == "__main__":
         seconds = get_seconds_until_time(args.time_in)
     step = abs(args.step)
 
+    s = sched.scheduler(time.time, time.sleep)
     count_me_down(
         seconds=seconds,
         prefix=args.prefix,

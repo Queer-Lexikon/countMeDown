@@ -2,6 +2,8 @@
 
 Das hier ist ein kleines Commandline-Tool in Python3, das einen Countdown in eine Textdatei schreibt. Das ist nützlich für Streams, um anzuzeigen, wie lange noch Pause oder wann der geplante Beginn sein wird, da OBS das nicht direkt unterstützt, aber eine Funktion hat, um Inhalte aus Textdateien direkt in den Stream zu tackern. 
 
+Das alles ist inspirierend von Snaz, was (a) nicht mehr weiterentwickelt wird (SÄD), (b) nicht auf macOS läuft (SÄD) und (c) eine GUI hat (Neid!).
+
 ## Wie? 
 Im einfachsten Falle `countMeDown.py 20` für 20 Sekunden. Das landet dann im selben Verzeichnis in einer Datei mit Namen `time.txt`.
 
@@ -28,6 +30,7 @@ optional arguments:
   --print               schreibe die Ausgabe zusätzlich in die Konsole
   --target_time         Wenn gesetzt wird die Eingabe als Ziel-Uhrzeit und nicht als Zeitdauer gelesen. Uhrzeit in 24-Stunden-Format mit
                         oder ohne Sekunden, Doppelpunkt als Trennzeichen.
+```
 
 Damit lässt sich schon bisschen was anstellen:
 

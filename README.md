@@ -41,3 +41,11 @@ Damit lässt sich schon bisschen was anstellen:
 - Zusätzlich gibt es noch **`--ending`**, was ebenso einen Text annimmt, dieser wird statt der Restzeit angezeigt, wenn der Timer eigentlich zu Ende ist. 
 - Wer die Datei an einem anderen Ort speichern möchte, kann mit **`--file`** den Pfad angeben.
 - um zum Testen zu sehen, was ausgegeben wird, gibt es noch **`--print`**: hier wird die Ausgabe zusätzlich noch in der Konsole ausgegeben
+
+## Aber?
+
+Teile dieses Programms basieren auf Python Timedeltas. Die Doku warnt: 
+
+> Note that for very large time intervals (greater than 270 years on most platforms) this method will lose microsecond accuracy.
+
+Das gilt auch hier. 

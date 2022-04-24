@@ -9,7 +9,13 @@ countMeDown kommt komplett ohne Abhängigkeiten (außer Python).
 
 
 ## Wie? 
-Im einfachsten Falle `countMeDown.py 20` für 20 Sekunden. Das landet dann im selben Verzeichnis in einer Datei mit Namen `time.txt`.
+Im einfachsten Falle so:
+
+```bash
+$ python3 countMeDown.py 30
+30 Sekunden Countdown in ./time.txt. Ab jetzt.
+```
+Die entstehende Textdatei (standardmäßig time.txt) muss dann noch OBS als Textquelle bekannt gemacht werden. 
 
 Sämtliche definierte Parameter zum starten gibt es mit `countMeDown.py --help`, was dann etwa so aussieht.
 

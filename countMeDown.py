@@ -123,6 +123,8 @@ if __name__ == "__main__":
         seconds = get_seconds_until_time(args.time_in)
     step = abs(args.step)
 
+    print(f"{seconds} Sekunden Countdown in {args.file}. Ab jetzt.")
+
     s = sched.scheduler(time.time, time.sleep)
     count_me_down(
         seconds=seconds,

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-import time
 import argparse
 import datetime
 import sched
+import time
 
 
 def format_time(secs: int) -> str:

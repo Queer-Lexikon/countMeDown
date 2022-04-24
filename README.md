@@ -4,6 +4,10 @@ Das hier ist ein kleines Commandline-Tool in Python3, das einen Countdown in ein
 
 Das alles ist inspirierend von Snaz, was (a) nicht mehr weiterentwickelt wird (SÄD), (b) nicht auf macOS läuft (SÄD) und (c) eine GUI hat (Neid!).
 
+countMeDown kommt komplett ohne Abhängigkeiten (außer Python).
+
+
+
 ## Wie? 
 Im einfachsten Falle `countMeDown.py 20` für 20 Sekunden. Das landet dann im selben Verzeichnis in einer Datei mit Namen `time.txt`.
 
@@ -48,4 +52,13 @@ Teile dieses Programms basieren auf Python Timedeltas. Die Doku warnt:
 
 > Note that for very large time intervals (greater than 270 years on most platforms) this method will lose microsecond accuracy.
 
-Das gilt auch hier. 
+Das gilt auch hier.
+
+## Läuft gut?
+
+In der aktuellen Version wird _sched_ aus der Python-Standardbibliothek zum Planen der Dateizugriffe benutzt. Damit ergibt sich ein Overhead von wenigen hundertstel Sekunden bei 10 Minuten Countdown: 
+
+```bash
+$ time python3 countMeDown.py 10:00
+python3 countMeDown.py 10:00  0,17s user 0,41s system 0% cpu 10:00,07 total
+```

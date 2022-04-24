@@ -125,3 +125,5 @@ dmypy.json
 
 # more
 time.txt # default output file name
+
+time.txt

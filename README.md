@@ -47,9 +47,9 @@ Damit lässt sich schon bisschen was anstellen:
 - Die angegebene Zeit muss nicht in Sekunden umgerechnet werden, sondern kann auch Minuten und Stunden beinhalten. Dann so `Stunden:Minuten:Sekunden`
 - Für so etwas wie "wir machen jetzt Pause bis um 18:00" gibt es **`--until`**: Wenn das Flag gesetzt wird, dann ist der Countdown nicht für 18 Minuten flat, sondern bis das nächste Mal 18:00 Uhr sein wird. 
 - für längere Countdowns ist es vielleicht sinnig, nicht jede Sekunde neu zu setzen. Das geht mit **`--step`**. Step nimmt allerdings nur Sekundenwerte an. Hier gibts keine Option Minuten oder Stunden anzugeben.
-- Während es natürlich möglich ist, den Text aus diesem Tool von statischen Texten in OBS einzurahmen, um einen Kontext zu geben, wann der Timer endet, kann es bequemer sein, das direkt in der Ausgabe zu haben. Einen Text vor die Restzeit gibt es mit **`--prefix`**.
-- Zusätzlich gibt es noch **`--ending`**, was ebenso einen Text annimmt, dieser wird statt der Restzeit angezeigt, wenn der Timer eigentlich zu Ende ist. 
-- Wer die Datei an einem anderen Ort speichern möchte, kann mit **`--file`** den Pfad angeben.
+- Während es natürlich möglich ist, den Text aus diesem Tool von statischen Texten in OBS einzurahmen, um einen Kontext zu geben, wann der Timer endet, kann es bequemer sein, das direkt in der Ausgabe zu haben. Einen Text vor die Restzeit gibt es mit **`--prefix`**. Etwa so: `$ countMeDown.py 30 --prefix "Stream startet in: "`.
+- Zusätzlich gibt es noch **`--ending`**, was ebenso einen Text annimmt, dieser wird statt der Restzeit angezeigt, wenn der Timer eigentlich zu Ende ist. Etwa so: `$ countMeDown.py 10:00 --ending "gleich"`. 
+- Wer die Datei an einem anderen Ort speichern möchte, kann mit **`--file`** den Pfad angeben. Etwa so: `$ countMeDown.py 120 --file "C:\\countdown.txt"`.
 - um zum Testen zu sehen, was ausgegeben wird, gibt es noch **`--print`**: hier wird die Ausgabe zusätzlich noch in der Konsole ausgegeben
 
 ## Aber?

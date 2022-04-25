@@ -109,17 +109,17 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "time_in",
-        help="Zeit für den Countdown. Entweder in Sekunden, Minuten:Sekunden oder als Zieluhrzeit, dann muss --target-time mit angegeben werden.",
+        help="Zeit für den Countdown. Entweder in Sekunden, Minuten:Sekunden oder als Zieluhrzeit, dann muss --until mit angegeben werden.",
     )
     parser.add_argument(
-        "--target_time",
+        "--until",
         action="store_true",
         help="Wenn gesetzt wird die Eingabe als Ziel-Uhrzeit und nicht als Zeitdauer gelesen. Uhrzeit in 24-Stunden-Format mit oder ohne Sekunden, Doppelpunkt als Trennzeichen.",
     )
     args = parser.parse_args()
 
     seconds = get_seconds_from_mixed_format(args.time_in)
-    if args.target_time:
+    if args.until:
         seconds = get_seconds_until_time(args.time_in)
     step = abs(args.step)
 

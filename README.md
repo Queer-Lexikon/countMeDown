@@ -71,4 +71,8 @@ In der aktuellen Version wird _sched_ aus der Python-Standardbibliothek zum Plan
 ```bash
 $ time python3 countMeDown.py 10:00
 python3 countMeDown.py 10:00  0,17s user 0,41s system 0% cpu 10:00,07 total
+
+$ time python3 countMeDown.py 120:00
+7200 Sekunden Countdown in ./time.txt. Ab jetzt.
+python3 countMeDown.py 120:00  1,20s user 3,44s system 0% cpu 2:00:00,11 total
 ```

@@ -20,14 +20,16 @@ Die entstehende Textdatei (standardmäßig time.txt) muss dann noch OBS als Text
 Sämtliche definierte Parameter zum starten gibt es mit `countMeDown.py --help`, was dann etwa so aussieht.
 
 ```
-usage: countMeDown.py [-h] [-f FILE] [-s STEP] [-p PREFIX] [-e ENDING] [--print] [--target_time] time_in
+usage: countMeDown.py [-h] [-f FILE] [-s STEP] [-p PREFIX] [-e ENDING] [--print]
+                      [--until]
+                      time_in
 
-OBS kann Textinputs aus Dateien lesen und direkt rendern. Hiermit können wir Countdowns in Textdateien schreiben, um sie direkt in den
-Stream zu kleben.
+OBS kann Textinputs aus Dateien lesen und direkt rendern. Hiermit können wir Countdowns
+in Textdateien schreiben, um sie direkt in den Stream zu kleben.
 
 positional arguments:
-  time_in               Zeit für den Countdown. Entweder in Sekunden, Minuten:Sekunden oder als Zieluhrzeit, dann muss --target-time mit
-                        angegeben werden.
+  time_in               Zeit für den Countdown. Entweder in Sekunden, Minuten:Sekunden
+                        oder als Zieluhrzeit, dann muss --until mit angegeben werden.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -38,8 +40,10 @@ optional arguments:
   -e ENDING, --ending ENDING
                         Text, der nach dem Ablauf des Timers geschrieben wird.
   --print               schreibe die Ausgabe zusätzlich in die Konsole
-  --target_time         Wenn gesetzt wird die Eingabe als Ziel-Uhrzeit und nicht als Zeitdauer gelesen. Uhrzeit in 24-Stunden-Format mit
-                        oder ohne Sekunden, Doppelpunkt als Trennzeichen.
+  --until               Wenn gesetzt wird die Eingabe als Ziel-Uhrzeit und nicht als
+                        Zeitdauer gelesen. Uhrzeit in 24-Stunden-Format mit oder ohne
+                        Sekunden, Doppelpunkt als Trennzeichen.
+
 ```
 
 Damit lässt sich schon bisschen was anstellen:

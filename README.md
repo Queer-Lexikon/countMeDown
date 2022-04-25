@@ -45,7 +45,7 @@ optional arguments:
 Damit lässt sich schon bisschen was anstellen:
 
 - Die angegebene Zeit muss nicht in Sekunden umgerechnet werden, sondern kann auch Minuten und Stunden beinhalten. Dann so `Stunden:Minuten:Sekunden`
-- Für so etwas wie "wir machen jetzt Pause bis um 18:00" gibt es **`--target_time`**: Wenn das Flag gesetzt wird, dann ist der Countdown nicht für 18 Minuten flat, sondern bis das nächste Mal 18:00 Uhr sein wird. 
+- Für so etwas wie "wir machen jetzt Pause bis um 18:00" gibt es **`--until`**: Wenn das Flag gesetzt wird, dann ist der Countdown nicht für 18 Minuten flat, sondern bis das nächste Mal 18:00 Uhr sein wird. 
 - für längere Countdowns ist es vielleicht sinnig, nicht jede Sekunde neu zu setzen. Das geht mit **`--step`**. Step nimmt allerdings nur Sekundenwerte an. Hier gibts keine Option Minuten oder Stunden anzugeben.
 - Während es natürlich möglich ist, den Text aus diesem Tool von statischen Texten in OBS einzurahmen, um einen Kontext zu geben, wann der Timer endet, kann es bequemer sein, das direkt in der Ausgabe zu haben. Einen Text vor die Restzeit gibt es mit **`--prefix`**.
 - Zusätzlich gibt es noch **`--ending`**, was ebenso einen Text annimmt, dieser wird statt der Restzeit angezeigt, wenn der Timer eigentlich zu Ende ist. 

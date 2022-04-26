@@ -2,7 +2,9 @@
 import argparse
 import datetime
 import sched
+import sys
 import time
+import types
 
 
 def format_time(secs: int) -> str:
@@ -70,6 +72,81 @@ def count_me_down(
     write_to_file(ending, filepath, verbose)
 
 
+def get_args_interactive() -> types.SimpleNamespace:
+    args = types.SimpleNamespace()
+    print("Ohne Parameter gestartet. Wir machen das jetzt interaktiv.")
+    until = input(
+        'Möchtest du eine Ziel-Uhrzeit angeben? Standard ist eine Zeitspanne. ("Ja" oder "J" für Uhrzeit.)\n > '
+    )
+    if until.lower().startswith("j"):
+        args.until = True
+        time_in = ""
+        while True:
+            time_in = input(
+                "Wie viel Uhr soll der Countdown enden? (24-Stunden-Format, Doppelpunkt als Trennzeichen mit Stunden und Minuten, Sekunden optional. Beispiel: 13:05)\n > "
+            )
+            if time_in.count(":") < 1:
+                print(f"{time_in} hat keinen Doppelpunkt, das kann nicht stimmen.")
+            else:
+                break
+        args.time_in = time_in
+
+    else:
+        args.until = False
+        time_in = input(
+            "Wie lange soll der Countdown andeuern? Entweder in Sekunden oder Minuten:Sekunden oder Stunden:Minuten:Sekunden, Standard: 60 Sekunden, enter ohne Eingabe zum übernehmen. \n > "
+        )
+        if len(time_in) == 0:
+            args.time_in = "60"
+        args.time_in = time_in
+
+    file = input(
+        "In welche Datei soll geschrieben werden? Standard: ./time.txt, zum übernehmen direkt enter ohne Eingabe\n > "
+    )
+    if len(file) == 0:
+        args.file = "./time.txt"
+    else:
+        args.file = file
+
+    step_unfinished = True
+    step = 1
+    while step_unfinished:
+        step_unfinished = False
+        step = input(
+            "Nach wie vielen Sekunden soll aktualisiert werden? Standard ist 1, mit enter übernehmen. Sonst als Ganzzahl eingeben\n > "
+        )
+        if len(step) == 0:
+            step = 1
+        else:
+            try:
+                int(step)
+                step_unfinished = False
+            except ValueError:
+                print("Das scheint keine Zahl zu sein.")
+                step_unfinished = True
+    args.step = abs(int(step))
+
+    verbose = input(
+        'Möchtest du zusätzlich zur Datei Ausgabe hier im Terminal? ("Ja" oder "J". Standard ist Nein.) \n > '
+    )
+    if verbose.lower().startswith("j"):
+        args.print = True
+    else:
+        args.print = False
+
+    ending = input(
+        "Was soll statt 00:00 am Ende angezeigt werden? Standard ist nichts. \n > "
+    )
+    args.ending = ending
+
+    prefix = input(
+        "Was soll vor der Restzeitanzeige angezeigt werden? Standard ist nichts. \n > "
+    )
+    args.prefix = prefix
+
+    return args
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="OBS kann Textinputs aus Dateien lesen und direkt rendern. Hiermit können wir Countdowns in Textdateien schreiben, um sie direkt in den Stream zu kleben."
@@ -116,7 +193,11 @@ if __name__ == "__main__":
         action="store_true",
         help="Wenn gesetzt wird die Eingabe als Ziel-Uhrzeit und nicht als Zeitdauer gelesen. Uhrzeit in 24-Stunden-Format mit oder ohne Sekunden, Doppelpunkt als Trennzeichen.",
     )
-    args = parser.parse_args()
+
+    if len(sys.argv) > 1:
+        args = parser.parse_args()
+    else:
+        args = get_args_interactive()
 
     seconds = get_seconds_from_mixed_format(args.time_in)
     if args.until:

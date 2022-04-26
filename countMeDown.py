@@ -2,6 +2,7 @@
 import argparse
 import datetime
 import sched
+import signal
 import sys
 import time
 import types
@@ -147,7 +148,14 @@ def get_args_interactive() -> types.SimpleNamespace:
     return args
 
 
+def exit_interrupt(signum, stackframe):
+    print("Mit Strg+C beendet")
+    sys.exit(0)
+
+
 if __name__ == "__main__":
+    signal.signal(signal.SIGINT, exit_interrupt)
+
     parser = argparse.ArgumentParser(
         description="OBS kann Textinputs aus Dateien lesen und direkt rendern. Hiermit können wir Countdowns in Textdateien schreiben, um sie direkt in den Stream zu kleben."
     )

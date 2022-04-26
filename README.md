@@ -17,6 +17,8 @@ $ python3 countMeDown.py 30
 ```
 Die entstehende Textdatei (standardmäßig time.txt) muss dann noch OBS als Textquelle bekannt gemacht werden. 
 
+Wer sich mit Parametern auf der Kommandozeile unsicher ist, kann auch komplett ohne starten. Dann fragt das Programm interaktiv nach den notwendigen Informationen.
+
 Sämtliche definierte Parameter zum starten gibt es mit `countMeDown.py --help`, was dann etwa so aussieht.
 
 ```
@@ -55,6 +57,8 @@ Damit lässt sich schon bisschen was anstellen:
 - Zusätzlich gibt es noch **`--ending`**, was ebenso einen Text annimmt, dieser wird statt der Restzeit angezeigt, wenn der Timer eigentlich zu Ende ist. Etwa so: `$ countMeDown.py 10:00 --ending "gleich"`. 
 - Wer die Datei an einem anderen Ort speichern möchte, kann mit **`--file`** den Pfad angeben. Etwa so: `$ countMeDown.py 120 --file "C:\\countdown.txt"`.
 - um zum Testen zu sehen, was ausgegeben wird, gibt es noch **`--print`**: hier wird die Ausgabe zusätzlich noch in der Konsole ausgegeben
+
+Wer vorzeitig beenden möchte, kann das mit <kbd>strg</kbd>+<kbd>c</kbd> tun. 
 
 ## Aber?
 

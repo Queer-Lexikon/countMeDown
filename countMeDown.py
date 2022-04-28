@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import argparse
 import datetime
+import pathlib
 import sched
 import signal
 import sys
 import time
 import types
+import typing
 
 
 def format_time(secs: int) -> str:
@@ -22,7 +24,7 @@ def get_seconds_until_time(target_time: str) -> int:
     if colon_count == 0:
         raise ValueError
     if target_time.count(":") == 1:
-        target_time = target_time + ":00"
+        target_time += ":00"
 
     hour, minute, second = tuple(map(int, target_time.split(":")))
 
@@ -48,7 +50,7 @@ def get_seconds_from_mixed_format(mixed: str) -> int:
         s: int = 0
         for unit in reversed(units):
             s += factor * unit
-            factor = factor * 60
+            factor *= 60
         seconds = s
     return seconds
 
@@ -73,77 +75,106 @@ def count_me_down(
     write_to_file(ending, filepath, verbose)
 
 
+def get_input_interactive(
+    name: str,
+    prompt: str,
+    default: str,
+    check: typing.Callable = lambda x: True,
+    convert: typing.Callable = lambda x: x,
+):
+    valid = False
+    user_input = default
+
+    while not valid:
+        valid = True
+        print(f"{prompt}")
+        user_input = input(f"Enter: {default} oder eintippen>")
+        if len(user_input) == 0:
+            user_input = default
+        if not check(user_input):
+            valid = False
+            print(f"{user_input} ist keine gültige Eingabe für {name}.")
+    return convert(user_input)
+
+
+def ja_nein_to_bool(answer: str) -> bool:
+    if answer.lower().startswith("j"):
+        return True
+    else:
+        return False
+
+
+def check_time_in_format(answer: str) -> bool:
+    parts = answer.split(":")
+    for part in parts:
+        try:
+            int(part)
+        except ValueError:
+            return False
+    return True
+
+
 def get_args_interactive() -> types.SimpleNamespace:
     args = types.SimpleNamespace()
     print("Ohne Parameter gestartet. Wir machen das jetzt interaktiv.")
-    until = input(
-        'Möchtest du eine Ziel-Uhrzeit angeben? Standard ist eine Zeitspanne. ("Ja" oder "J" für Uhrzeit.)\n > '
+    args.until = get_input_interactive(
+        name="until",
+        prompt="Möchtest du eine Ziel-Uhrzeit angeben? Ja für Uhrzeit, Nein für Zeitspanne",
+        default="Ja",
+        check=lambda x: x.lower().startswith("j") or x.lower().startswith("n"),
+        convert=ja_nein_to_bool,
     )
-    if until.lower().startswith("j"):
-        args.until = True
-        time_in = ""
-        while True:
-            time_in = input(
-                "Wie viel Uhr soll der Countdown enden? (24-Stunden-Format, Doppelpunkt als Trennzeichen mit Stunden und Minuten, Sekunden optional. Beispiel: 13:05)\n > "
-            )
-            if time_in.count(":") < 1:
-                print(f"{time_in} hat keinen Doppelpunkt, das kann nicht stimmen.")
-            else:
-                break
-        args.time_in = time_in
 
-    else:
-        args.until = False
-        time_in = input(
-            "Wie lange soll der Countdown andeuern? Entweder in Sekunden oder Minuten:Sekunden oder Stunden:Minuten:Sekunden, Standard: 60 Sekunden, enter ohne Eingabe zum übernehmen. \n > "
+    if args.until:
+        args.time_in = get_input_interactive(
+            name="Ziel-Uhrzeit",
+            prompt="Wie viel Uhr soll der Countdown enden? (24-Stunden-Format, Doppelpunkt als Trennzeichen mit Stunden und Minuten, Sekunden optional. Beispiel 13: 05",
+            default="00:00",
+            check=lambda x: x.count(":") > 0,
         )
-        if len(time_in) == 0:
-            args.time_in = "60"
-        args.time_in = time_in
-
-    file = input(
-        "In welche Datei soll geschrieben werden? Standard: ./time.txt, zum übernehmen direkt enter ohne Eingabe\n > "
-    )
-    if len(file) == 0:
-        args.file = "./time.txt"
     else:
-        args.file = file
-
-    step_unfinished = True
-    step = 1
-    while step_unfinished:
-        step_unfinished = False
-        step = input(
-            "Nach wie vielen Sekunden soll aktualisiert werden? Standard ist 1, mit enter übernehmen. Sonst als Ganzzahl eingeben\n > "
+        args.time_in = get_input_interactive(
+            name="Zeitdauer",
+            prompt="Wie lange soll der Countdown andeuern? Entweder in Sekunden oder Minuten:Sekunden oder Stunden:Minuten:Sekunden",
+            default="60",
+            check=check_time_in_format,
+            convert=lambda x: str(get_seconds_from_mixed_format(x)),
         )
-        if len(step) == 0:
-            step = 1
-        else:
-            try:
-                int(step)
-                step_unfinished = False
-            except ValueError:
-                print("Das scheint keine Zahl zu sein.")
-                step_unfinished = True
-    args.step = abs(int(step))
 
-    verbose = input(
-        'Möchtest du zusätzlich zur Datei Ausgabe hier im Terminal? ("Ja" oder "J". Standard ist Nein.) \n > '
+    args.file = get_input_interactive(
+        name="Dateipfad",
+        prompt="In welche Datei soll geschrieben werden?",
+        default="./time.txt",
+        check=lambda x: pathlib.Path(x).parent.exists(),
     )
-    if verbose.lower().startswith("j"):
-        args.print = True
-    else:
-        args.print = False
 
-    ending = input(
-        "Was soll statt 00:00 am Ende angezeigt werden? Standard ist nichts. \n > "
+    args.step = get_input_interactive(
+        name="Schrittgröße",
+        prompt="Nach wie vielen Sekunden soll aktualisiert werden? Eingabe als Ganzzahl",
+        default="1",
+        check=lambda x: x.isdecimal(),
+        convert=int,
     )
-    args.ending = ending
 
-    prefix = input(
-        "Was soll vor der Restzeitanzeige angezeigt werden? Standard ist nichts. \n > "
+    args.print = get_input_interactive(
+        name="Ausführliche Ausgabe",
+        prompt='Möchtest du zusätzlich zur Datei Ausgabe hier im Terminal? ("Ja" oder "J".',
+        default="Nein",
+        check=lambda x: x.lower().startswith("j") or x.lower().startswith("n"),
+        convert=ja_nein_to_bool,
     )
-    args.prefix = prefix
+
+    args.ending = get_input_interactive(
+        name="Endtext",
+        prompt="Was soll statt 00:00 am Ende angezeigt werden?",
+        default="",
+    )
+
+    args.prefix = get_input_interactive(
+        name="Präfix",
+        prompt="Was soll vor der Restzeitanzeige angezeigt werden?",
+        default="",
+    )
 
     return args
 

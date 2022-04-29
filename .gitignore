@@ -124,6 +124,5 @@ dmypy.json
 .pyre/
 
 # more
-time.txt # default output file name
-
+.idea/
 time.txt

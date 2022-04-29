@@ -63,8 +63,27 @@ def write_to_file(line: str, filepath: str, verbose: bool):
 
 
 def count_me_down(
-    seconds: int, prefix: str, ending: str, step: int, filepath: str, verbose: bool
+    seconds: int,
+    prefix: str = "",
+    ending: str = "",
+    step: int = 1,
+    filepath: str = "./time.txt",
+    verbose: bool = False,
 ):
+    """
+    Countdown a given number of seconds and write the remaining seconds to a file.
+    Remaining seconds can be optionally prefixed with another string.
+    After the timer hits 0, a special string can be written to the file.
+
+    :param seconds: number of seconds to countdown. If you have a something like Minutes:Seconds try `get_seconds_from_mixed_format()`
+    :param prefix: string to prepend to the remaining seconds. Defaults to the empty string.
+    :param ending: string to write after timer hits zero. Defaults to the empty string.
+    :param step: Time in seconds between filewrites. Defaults to 1
+    :param filepath: path to write the countdown to. Defaults to ./time.txt"
+    :param verbose: output can be written to the console optionally. Defaults to false.
+    :return:
+    """
+    s = sched.scheduler(time.time, time.sleep)
     for moment in range(0, seconds + step, step):
         if seconds < moment:
             break
@@ -245,7 +264,6 @@ if __name__ == "__main__":
 
     print(f"{seconds} Sekunden Countdown in {args.file}. Ab jetzt.")
 
-    s = sched.scheduler(time.time, time.sleep)
     count_me_down(
         seconds=seconds,
         prefix=args.prefix,

@@ -2,9 +2,9 @@
 
 Das hier ist ein kleines Commandline-Tool in Python3, das einen Countdown in eine Textdatei schreibt. Das ist nützlich für Streams, um anzuzeigen, wie lange noch Pause oder wann der geplante Beginn sein wird, da OBS das nicht direkt unterstützt, aber eine Funktion hat, um Inhalte aus Textdateien direkt in den Stream zu tackern. 
 
-Das alles ist inspirierend von Snaz, was (a) nicht mehr weiterentwickelt wird (SÄD), (b) nicht auf macOS läuft (SÄD) und (c) eine GUI hat (Neid!).
+Das alles ist inspirierend von Snaz, was (a) nicht mehr weiterentwickelt wird (SÄD), (b) nicht auf macOS läuft (SÄD) und (c) eine GUI hat (<del>Neid!</del><ins>wir haben immerhin ein Webinterface nun</ins>).
 
-countMeDown kommt komplett ohne Abhängigkeiten (außer Python).
+countMeDown kommt komplett ohne Abhängigkeiten (außer Python, bottlepy für das Webrfont ist direkt mit im Repo).
 
 
 
@@ -18,6 +18,8 @@ $ python3 countMeDown.py 30
 Die entstehende Textdatei (standardmäßig time.txt) muss dann noch OBS als Textquelle bekannt gemacht werden. 
 
 Wer sich mit Parametern auf der Kommandozeile unsicher ist, kann auch komplett ohne starten. Dann fragt das Programm interaktiv nach den notwendigen Informationen.
+
+Wer sich insgesamt mit Kommandozeilen unsicher ist, startet direkt `web.py` und führt einen Webbrowser auf http://localhost:22222 und kann dort Einstellungen festlegen und genau so CountDowns festlegen. It's magic. 
 
 Sämtliche definierte Parameter zum starten gibt es mit `countMeDown.py --help`, was dann etwa so aussieht.
 

@@ -168,6 +168,7 @@ else:  # 2.x
     json_loads = json_lds
     exec(compile("def _raise(*a): raise a[0], a[1], a[2]", "<py3fix>", "exec"))
 
+
 # Some helpers for string/byte handling
 def tob(s, enc="utf8"):
     if isinstance(s, unicode):
@@ -309,7 +310,6 @@ class RouteReset(BottleException):
 
 
 class RouterUnknownModeError(RouteError):
-
     pass
 
 

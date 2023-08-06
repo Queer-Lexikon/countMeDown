@@ -1,4 +1,5 @@
 import threading
+import webbrowser
 
 import bottle
 import countMeDown
@@ -36,4 +37,8 @@ def handle_post():
 
 
 if __name__ == "__main__":
-    bottle.run(host="localhost", port=22222)
+    server = threading.Thread(target=bottle.run,
+                     kwargs={"host": "localhost", "port": 22222})
+    server.start()
+    
+    webbrowser.open("http://localhost:22222")

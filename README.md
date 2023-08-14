@@ -11,6 +11,10 @@ countMeDown kommt komplett ohne Abhängigkeiten (außer Python, bottlepy für da
 ## Wie? 
 Im einfachsten Falle so:
 
+Doppelklick auf die `.command`-Datei, dann sollte sich ein Browserfenster öffnen, um Dinge einzustellen und einen Countdown anzulegen. Der kommt dann immer nach `time.txt`. Die kann man dann an OBS verfüttern. 
+
+Oder: 
+
 ```bash
 $ python3 countMeDown.py 30
 30 Sekunden Countdown in ./time.txt. Ab jetzt.

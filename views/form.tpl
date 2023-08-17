@@ -3,10 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>CountMeDown</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        *+* { margin-top: 1rem }
+        button {
+            padding: .5rem 1rem;
+            cursor: pointer;
+        }
+        .optional {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: .5rem;
+        }
+        .optional > div {
+            display: flex;
+            flex-flow: column;
+        }
+        input[type="text"], input[type="number"], input[type="time"] {
+            padding: .25rem .5rem;
+        }
+    </style>
 </head>
 <body>
 <h1>CountMeDown</h1>
-<form method="post" style="width: 500px" name="webform">
+<form method="post" name="webform">
 
     <fieldset>
         <legend>Modus:</legend>
@@ -32,7 +56,7 @@
     </fieldset>
 
 
-    <fieldset style="display: grid; grid-template-columns: auto auto; grid-gap: 5px;">
+    <fieldset class="optional">
         <legend>Optionale Dinge:</legend>
 
         <div>
@@ -50,12 +74,9 @@
             <label for="ending">Text am Ende:</label>
             <input type="text" placeholder="gleich" name="ending" id="ending">
         </div>
-
-        <div>
-            <input type="submit" value="Timer starten" style="margin-top: 1rem">
-        </div>
     </fieldset>
 
+    <button type="submit">Timer starten</button>
 </form>
 
 <script>
